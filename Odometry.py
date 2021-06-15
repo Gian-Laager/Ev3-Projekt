@@ -1,4 +1,5 @@
 import math
+import time
 
 from Matrix import Matrix
 from Vector import Vector
@@ -9,8 +10,16 @@ class Odometry():
         self.robotDiameter = robotDiameter
         self.currentPosition = startPosition
         self.translationMatrix = Matrix(3, 3)
+        self.timeOfPreviousMeasurment = time.thread_time()
 
-    def update(self, timeDelta, velocityRight, velocityLeft):
+    def getAngle(self):
+        return self.currentPosition.values[2]
+
+    def getPos(self):
+        return Vector(2, self.currentPosition[:2])
+
+    def update(self, velocityRight, velocityLeft):
+        timeDelta = time.thread_time() - self.timeOfPreviousMeasurment
         angularVelocity = (velocityRight - velocityLeft) / self.robotDiameter
         rotationRadius = self.robotDiameter / 2 * (velocityRight + velocityLeft) / (velocityRight - velocityLeft)
         self.translationMatrix.set(0, 0, -math.cos(angularVelocity * timeDelta))
@@ -36,3 +45,4 @@ class Odometry():
         otherMagicVector.set(2, timeDelta * angularVelocity)
 
         self.currentPosition = self.translationMatrix * magicVector + otherMagicVector
+        self.timeOfPreviousMeasurment = time.thread_time()
