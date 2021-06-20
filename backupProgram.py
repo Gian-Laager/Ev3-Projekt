@@ -30,8 +30,6 @@ class ImprovedGear:
         while self.rightMotor.getMotorCount() < desiredCount:
             pass
         self.rightMotor.stop()
-        while self.rightMotor.getMotorCount() < desiredCount:
-            pass
         self.leftMotor.stop()
 
     def forwardNonBlocking(self):
@@ -47,8 +45,6 @@ class ImprovedGear:
         while self.rightMotor.getMotorCount() > desiredCount:
             pass
         self.rightMotor.stop()
-        while self.leftMotor.getMotorCount() > desiredCount:
-            pass
         self.leftMotor.stop()
 
     def left(self, deg):
@@ -61,8 +57,6 @@ class ImprovedGear:
         while self.rightMotor.getMotorCount() < desiredCount:
             pass
         self.rightMotor.stop()
-        while self.leftMotor.getMotorCount() > -desiredCount:
-            pass
         self.leftMotor.stop()
 
     def right(self, deg):
@@ -75,8 +69,6 @@ class ImprovedGear:
         while self.rightMotor.getMotorCount() > -desiredCount:
             pass
         self.rightMotor.stop()
-        while self.leftMotor.getMotorCount() < desiredCount:
-            pass
         self.leftMotor.stop()
 
 
@@ -95,7 +87,7 @@ addParts(robot, colorSensor, distanceSensor)
 
 def driveAroundObject():
     gear.left(90.0)
-    gear.forward(5.0)
+    gear.forward(10.0)
     gear.right(90.0)
 
 def getObjectColor(color):
@@ -111,9 +103,9 @@ def getObjectColor(color):
 def main():
     counter = 0
     while not robot.isEscapeHit():
-        if distanceSensor.getDistance() <= 5:
+        if distanceSensor.getDistance() <= 5 and distanceSensor.getDistance() > 0:
             if getObjectColor(colorSensor.getColor()) == Colors.yellow:
-                gear.forwar(6.0)
+                gear.forward(6.0)
                 gear.backward(2.0)
                 gear.left(90.0)
                 gear.forward(2.0)
