@@ -87,15 +87,15 @@ addParts(robot, colorSensor, distanceSensor)
 
 def driveAroundObject():
     gear.left(90.0)
-    gear.forward(10.0)
+    gear.forward(15.0)
     gear.right(90.0)
 
 def getObjectColor(color):
-    if color.blue >= 5:
+    if color.blue >= 8:
         return Colors.white
     elif color.blue >= 2:
         return Colors.blue
-    elif color.red >= 2:
+    elif color.red >= 1 and color.green >=1 and color.blue >= 1:
         return Colors.yellow
     return Colors.black
 
@@ -103,7 +103,7 @@ def getObjectColor(color):
 def main():
     counter = 0
     while not robot.isEscapeHit():
-        if distanceSensor.getDistance() <= 5 and distanceSensor.getDistance() > 0:
+        if distanceSensor.getDistance() <= 3 and distanceSensor.getDistance() > 0:
             if getObjectColor(colorSensor.getColor()) == Colors.yellow:
                 gear.forward(6.0)
                 gear.backward(2.0)
